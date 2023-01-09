@@ -1,17 +1,17 @@
-import { UserCard } from "./sections/users/UserCard";
-import { useUsers } from "./sections/users/useUsers";
+/* eslint-disable no-console */
 
-export function App() {
-	const users = useUsers();
+import { LocalStorageUruguayCountryBrandRepository } from "./infrastructure/LocalStorageUruguayCountryBrandRepository";
+import { MultiStepForm } from "./sections/multi_step_form/MultiStepForm";
+import { MultiStepFormContexProvider } from "./sections/multi_step_form/MultiStepFormContexProvider";
 
+const repository = new LocalStorageUruguayCountryBrandRepository();
+
+function App() {
 	return (
-		<div className="App">
-			<h3>🌱⚛️ Create React App Codely template example</h3>
-			<h2>Current users</h2>
-
-			{users.map((user) => (
-				<UserCard key={user.name} user={user} />
-			))}
-		</div>
+		<MultiStepFormContexProvider repository={repository}>
+			<MultiStepForm />
+		</MultiStepFormContexProvider>
 	);
 }
+
+export { App };
