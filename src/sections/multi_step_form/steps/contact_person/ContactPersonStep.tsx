@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-//import { ContactPerson } from "../../../../domain/UruguayCountryBrand";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { useEffect } from "react";
 
 import { useMultiStepFormContext } from "../../MultiStepFormContexProvider";
+import { UIEvents } from "../../UIEvents";
 
 //function validateForm() {}
 
 function ContactPersonStep() {
-	const { uruguayCountryBrand, currentStep, setCurrentStep, formRef, setPrevStep } =
-		useMultiStepFormContext();
+	const { currentStep, uruguayCountryBrand, saveStep, formRef } = useMultiStepFormContext();
 
 	const {
 		contactPersonName,
@@ -26,27 +26,23 @@ function ContactPersonStep() {
 			const contactPersonPosition = formRef.current.elements.contactPersonPosition.value;
 			const contactPersonEmail = formRef.current.elements.contactPersonEmail.value;
 			const contactPersonPhone = formRef.current.elements.contactPersonPhone.value;
-			repository
-				.save({
+
+			saveStep({
+				stepData: {
 					contactPersonName,
 					contactPersonLastName,
 					contactPersonPosition,
 					contactPersonEmail,
 					contactPersonPhone,
-				})
-				.then(function () {
-					setCurrentStep(currentStep + 1);
-					setPrevStep(currentStep);
-				})
-				.catch(function (e) {
-					new Error(JSON.stringify(e));
-				});
+				},
+				previousStep: currentStep,
+				nextStep: currentStep + 1,
+			});
 		};
-
-		document.addEventListener("formBuildInValidateSucces", reloadRepositoryWidgets);
+		document.addEventListener(UIEvents.buildInFormValidateSucess, reloadRepositoryWidgets);
 
 		return () => {
-			document.removeEventListener("formBuildInValidateSucces", reloadRepositoryWidgets);
+			document.removeEventListener(UIEvents.buildInFormValidateSucess, reloadRepositoryWidgets);
 		};
 	}, []);
 
@@ -61,8 +57,6 @@ function ContactPersonStep() {
 					id="contactPersonName"
 					required
 					defaultValue={contactPersonName}
-					// value={contactPersonName}
-					// onChange={(e) => setContactPersonName(e.target.value)}
 				/>
 			</label>
 			<label htmlFor="contactPersonLastName">

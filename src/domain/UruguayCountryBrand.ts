@@ -1,4 +1,4 @@
-interface ContactPerson {
+export interface ContactPerson {
 	contactPersonName: string;
 	contactPersonLastName: string;
 	contactPersonPosition: string;
@@ -6,13 +6,28 @@ interface ContactPerson {
 	contactPersonPhone: string;
 }
 
-interface ApplicantCompanyInformation {
+export interface ApplicantCompanyInformation {
 	applicantCompanyBusinessName: string;
 	applicantCompanyName: string;
 }
 
-interface UruguayCountryBrand
-	extends Partial<ContactPerson>,
-		Partial<ApplicantCompanyInformation> {}
+export interface UruguayCountryBrand extends ContactPerson, ApplicantCompanyInformation {
+	uuid: string;
+}
 
-export type { ApplicantCompanyInformation, ContactPerson, UruguayCountryBrand };
+export function defaultUruguayCountryBrand(): UruguayCountryBrand {
+	return {
+		uuid: generateUUID(),
+		contactPersonName: "",
+		contactPersonLastName: "",
+		contactPersonPosition: "",
+		contactPersonEmail: "",
+		contactPersonPhone: "",
+		applicantCompanyBusinessName: "",
+		applicantCompanyName: "",
+	} as UruguayCountryBrand;
+}
+
+export function generateUUID(length = 8): string {
+	return crypto.randomUUID().substring(0, length).toUpperCase();
+}

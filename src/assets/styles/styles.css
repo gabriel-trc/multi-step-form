@@ -3,6 +3,11 @@
 	display: flex;
 }
 
+#root form {
+	width: 50%;
+	margin: auto;
+}
+
 .App {
 	width: 60%;
 	margin: auto;

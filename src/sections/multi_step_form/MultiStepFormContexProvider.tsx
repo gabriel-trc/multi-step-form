@@ -1,63 +1,62 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useRef, useState } from "react";
 
-import { UruguayCountryBrand } from "../../domain/UruguayCountryBrand";
+import { defaultUruguayCountryBrand, UruguayCountryBrand } from "../../domain/UruguayCountryBrand";
 // import { config } from "../../../devdash_config";
 // import { DomainEvents } from "../../../domain/DomainEvents";
 import { UruguayCountryBrandRepository } from "../../domain/UruguayCountryBrandRepository";
+import { LocalStorageUruguayCountryBrandRepository } from "../../infrastructure/LocalStorageUruguayCountryBrandRepository";
+import { useAddUruguayCountryBrand } from "./useAddUruguayCountryBrand";
+import { useUruguayCountryBrand } from "./useUruguayCountryBrand";
+
+const repository = new LocalStorageUruguayCountryBrandRepository();
 
 const MultiStepFormContex = createContext<{
-	repository: UruguayCountryBrandRepository | null;
-	uruguayCountryBrand: UruguayCountryBrand | null;
+	repository: UruguayCountryBrandRepository;
+	uruguayCountryBrand: UruguayCountryBrand;
 	currentStep: number;
-	setCurrentStep: React.Dispatch<React.SetStateAction<number>> | null;
-	prevStep: number;
-	setPrevStep: React.Dispatch<React.SetStateAction<number>> | null;
+	goToPreviousStep: React.MouseEventHandler<HTMLButtonElement>;
 	formRef: React.MutableRefObject<null> | null;
+	saveStep: Function;
 }>({
-	repository: null,
-	uruguayCountryBrand: null,
+	repository,
+	uruguayCountryBrand: defaultUruguayCountryBrand(),
 	currentStep: 0,
-	setCurrentStep: null,
-	prevStep: 0,
-	setPrevStep: null,
+	goToPreviousStep: () => {},
+	saveStep: () => {},
 	formRef: null,
 });
 
-function MultiStepFormContexProvider({
-	children,
-	repository,
-}: {
-	children: React.ReactElement;
-	repository: UruguayCountryBrandRepository;
-}) {
-	const [uruguayCountryBrand, setUruguayCountryBrand] = useState<UruguayCountryBrand>({
-		contactPersonName: "",
-		contactPersonLastName: "",
-		contactPersonPosition: "",
-		contactPersonEmail: "",
-		contactPersonPhone: "",
-		applicantCompanyBusinessName: "",
-		applicantCompanyName: "",
-	});
+function MultiStepFormContexProvider({ children }: { children: React.ReactElement }) {
+	const [uuid, setUuid] = useState("");
 	const [currentStep, setCurrentStep] = useState(0);
-	const [prevStep, setPrevStep] = useState(0);
-
-	useEffect(() => {
-		repository
-			.search()
-			.then((storedUruguayCountryBrand) => {
-				if (storedUruguayCountryBrand) {
-					setUruguayCountryBrand(storedUruguayCountryBrand);
-
-					return;
-				}
-			})
-			.catch((e) => {
-				new Error(JSON.stringify(e));
-			});
-	}, [repository]);
+	const [previousStep, setPreviousStep] = useState(0);
+	const { uruguayCountryBrand } = useUruguayCountryBrand({ repository, uuid });
+	const { save } = useAddUruguayCountryBrand({ repository });
 
 	const formRef = useRef(null);
+
+	function saveStep({
+		stepData,
+		previousStep,
+		nextStep,
+	}: {
+		stepData: Partial<UruguayCountryBrand>;
+		previousStep: number;
+		nextStep: number;
+	}) {
+		save(stepData)
+			.then(function () {
+				setCurrentStep(nextStep);
+				setPreviousStep(previousStep);
+			})
+			.catch(function (e) {
+				new Error(JSON.stringify(e));
+			});
+	}
+
+	function goToPreviousStep() {
+		setCurrentStep(previousStep);
+	}
 
 	return (
 		<MultiStepFormContex.Provider
@@ -65,9 +64,8 @@ function MultiStepFormContexProvider({
 				repository,
 				uruguayCountryBrand,
 				currentStep,
-				setCurrentStep,
-				prevStep,
-				setPrevStep,
+				goToPreviousStep,
+				saveStep,
 				formRef,
 			}}
 		>

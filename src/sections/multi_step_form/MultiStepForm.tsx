@@ -2,6 +2,7 @@
 
 import { useMultiStepFormContext } from "./MultiStepFormContexProvider";
 import { ApplicantCompanyInformationStep, ContactPersonStep } from "./steps";
+import { UIEvents } from "./UIEvents";
 
 const rightArrow =
 	"https://ik.imagekit.io/lrjseyuxi3m/youtube/Form/next-arrow_1pmaQTqF3.svg?updatedAt=1634410703345";
@@ -129,34 +130,29 @@ const leftArrow =
 const FORM_STEPS = [<ContactPersonStep />, <ApplicantCompanyInformationStep />];
 
 function MultiStepForm() {
-	const { prevStep, currentStep, setCurrentStep, formRef } = useMultiStepFormContext();
+	const { currentStep, goToPreviousStep, formRef } = useMultiStepFormContext();
 
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		document.dispatchEvent(new CustomEvent("formBuildInValidateSucces"));
+		document.dispatchEvent(new CustomEvent(UIEvents.buildInFormValidateSucess));
 	}
 
 	return (
 		<form ref={formRef} onSubmit={handleSubmit}>
 			{FORM_STEPS[currentStep]}
-			<section>
-				{currentStep > 0 && (
-					<button
-						type="button"
-						onClick={() => {
-							setCurrentStep(prevStep);
-						}}
-					>
+			{currentStep > 0 && (
+				<section>
+					<button type="button" onClick={goToPreviousStep}>
 						<img src={leftArrow} />
 						BACK
 					</button>
-				)}
 
-				<button type="submit">
-					<img src={rightArrow} />
-					NEXT
-				</button>
-			</section>
+					<button type="submit">
+						<img src={rightArrow} />
+						NEXT
+					</button>
+				</section>
+			)}
 		</form>
 	);
 }

@@ -1,5 +1,5 @@
 export class UruguayCountryBrandAlreadyExistsError extends Error {
-	constructor(url: string) {
-		super(`The repository with url ${url} already exists`);
+	constructor(name: string) {
+		super(`${name} already exists`);
 	}
 }
