@@ -1,12 +1,7 @@
-import { MultiStepForm } from "./sections/multi_step_form/MultiStepForm";
-import { MultiStepFormContexProvider } from "./sections/multi_step_form/MultiStepFormContexProvider";
+import { Router } from "./Router";
 
 function App() {
-	return (
-		<MultiStepFormContexProvider>
-			<MultiStepForm />
-		</MultiStepFormContexProvider>
-	);
+	return <Router />;
 }
 
 export { App };

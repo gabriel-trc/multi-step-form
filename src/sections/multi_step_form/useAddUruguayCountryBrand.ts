@@ -1,29 +1,29 @@
 import { DomainEvents } from "../../domain/DomainEvents";
-import { UruguayCountryBrand } from "../../domain/UruguayCountryBrand";
-import { UruguayCountryBrandAlreadyExistsError } from "../../domain/UruguayCountryBrandAlreadyExistsError";
-import { UruguayCountryBrandRepository } from "../../domain/UruguayCountryBrandRepository";
+import { MultiStepForm } from "../../domain/MultiStepForm";
+import { MultiStepFormAlreadyExistsError } from "../../domain/MultiStepFormAlreadyExistsError";
+import { MultiStepFormRepository } from "../../domain/MultiStepFormRepository";
 
-function useAddUruguayCountryBrand({ repository }: { repository: UruguayCountryBrandRepository }): {
+function useAddMultiStepForm({ repository }: { repository: MultiStepFormRepository }): {
 	save: (
-		uruguayCountryBrand: Partial<UruguayCountryBrand>
-	) => Promise<UruguayCountryBrandAlreadyExistsError | void>;
+		uruguayCountryBrand: Partial<MultiStepForm>
+	) => Promise<MultiStepFormAlreadyExistsError | void>;
 } {
 	async function save(
-		uruguayCountryBrand: Partial<UruguayCountryBrand>
-	): Promise<UruguayCountryBrandAlreadyExistsError | void> {
-		// const storedUruguayCountryBrand = await repository.search(uruguayCountryBrand.uuid);
+		uruguayCountryBrand: Partial<MultiStepForm>
+	): Promise<MultiStepFormAlreadyExistsError | void> {
+		// const storedMultiStepForm = await repository.search(uruguayCountryBrand.uuid);
 
-		// if (storedUruguayCountryBrand) {
-		// 	return new UruguayCountryBrandAlreadyExistsError(
-		// 		storedUruguayCountryBrand.applicantCompanyName
+		// if (storedMultiStepForm) {
+		// 	return new MultiStepFormAlreadyExistsError(
+		// 		storedMultiStepForm.applicantCompanyName
 		// 	);
 		// }
 
-		await repository.save(uruguayCountryBrand as UruguayCountryBrand);
+		await repository.save(uruguayCountryBrand as MultiStepForm);
 		document.dispatchEvent(new CustomEvent(DomainEvents.uruguayCountryBrandSaved));
 	}
 
 	return { save };
 }
 
-export { useAddUruguayCountryBrand };
+export { useAddMultiStepForm };

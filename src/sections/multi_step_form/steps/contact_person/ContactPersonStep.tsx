@@ -6,10 +6,8 @@ import { useEffect } from "react";
 import { useMultiStepFormContext } from "../../MultiStepFormContexProvider";
 import { UIEvents } from "../../UIEvents";
 
-//function validateForm() {}
-
 function ContactPersonStep() {
-	const { currentStep, uruguayCountryBrand, saveStep, formRef } = useMultiStepFormContext();
+	const { currentStep, multiStepForm, saveStep, formRef } = useMultiStepFormContext();
 
 	const {
 		contactPersonName,
@@ -17,7 +15,7 @@ function ContactPersonStep() {
 		contactPersonPosition,
 		contactPersonEmail,
 		contactPersonPhone,
-	} = uruguayCountryBrand;
+	} = multiStepForm;
 
 	useEffect(() => {
 		const reloadRepositoryWidgets = () => {

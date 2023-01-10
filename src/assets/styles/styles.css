@@ -1,15 +1,18 @@
 #root {
 	height: 100vh;
-	display: flex;
 }
 
-#root form {
-	width: 50%;
-	margin: auto;
+header {
+	margin-bottom: 2em;
+	text-align: center;
 }
 
-.App {
+main {
 	width: 60%;
 	margin: auto;
-	height: 80vh;
+}
+
+hr {
+	border-top-width: 8px;
+	margin: 2em 0px;
 }
