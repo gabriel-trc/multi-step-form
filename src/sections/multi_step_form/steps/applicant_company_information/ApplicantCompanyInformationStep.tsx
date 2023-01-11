@@ -36,8 +36,7 @@ function ApplicantCompanyInformationStep() {
 	} = multiStepForm;
 
 	useEffect(() => {
-		const reloadRepositoryWidgets = () => {
-			const elements: FormData = formRef.current.elements;
+		const submitStepData = () => {
 			const {
 				applicantCompanyBusinessName,
 				applicantCompanyName,
@@ -49,35 +48,35 @@ function ApplicantCompanyInformationStep() {
 				applicantCompanyWeb,
 				applicantCompanyEmail,
 				applicantCompanySocialNetworks,
-			} = elements;
+			} = formRef.current.elements;
 
 			saveStep({
 				stepData: {
-					applicantCompanyBusinessName,
-					applicantCompanyName,
-					applicantCompanyId,
-					applicantCompanyAddress,
-					applicantCompanyDepartment,
-					applicantCompanyLocation,
-					applicantCompanyPhone,
-					applicantCompanyWeb,
-					applicantCompanyEmail,
-					applicantCompanySocialNetworks,
+					applicantCompanyBusinessName: applicantCompanyBusinessName.value,
+					applicantCompanyName: applicantCompanyName.value,
+					applicantCompanyId: applicantCompanyId.value,
+					applicantCompanyAddress: applicantCompanyAddress.value,
+					applicantCompanyDepartment: applicantCompanyDepartment.value,
+					applicantCompanyLocation: applicantCompanyLocation.value,
+					applicantCompanyPhone: applicantCompanyPhone.value,
+					applicantCompanyWeb: applicantCompanyWeb.value,
+					applicantCompanyEmail: applicantCompanyEmail.value,
+					applicantCompanySocialNetworks: applicantCompanySocialNetworks.value,
 				},
 				previousStep: currentStep,
 				nextStep: currentStep + 1,
 			});
 		};
-		document.addEventListener(UIEvents.buildInFormValidateSucess, reloadRepositoryWidgets);
+		document.addEventListener(UIEvents.buildInFormValidateSucess, submitStepData);
 
 		return () => {
-			document.removeEventListener(UIEvents.buildInFormValidateSucess, reloadRepositoryWidgets);
+			document.removeEventListener(UIEvents.buildInFormValidateSucess, submitStepData);
 		};
 	}, []);
 
 	return (
 		<section>
-			<h3>1 - Datos de la empresa solicitante</h3>
+			<h3>2 - Datos de la empresa solicitante</h3>
 			<label htmlFor="applicantCompanyBusinessName">
 				Razón social *
 				<input

@@ -18,7 +18,7 @@ function ContactPersonStep() {
 	} = multiStepForm;
 
 	useEffect(() => {
-		const reloadRepositoryWidgets = () => {
+		const submitStepData = () => {
 			const contactPersonName = formRef.current.elements.contactPersonName.value;
 			const contactPersonLastName = formRef.current.elements.contactPersonLastName.value;
 			const contactPersonPosition = formRef.current.elements.contactPersonPosition.value;
@@ -37,10 +37,10 @@ function ContactPersonStep() {
 				nextStep: currentStep + 1,
 			});
 		};
-		document.addEventListener(UIEvents.buildInFormValidateSucess, reloadRepositoryWidgets);
+		document.addEventListener(UIEvents.buildInFormValidateSucess, submitStepData);
 
 		return () => {
-			document.removeEventListener(UIEvents.buildInFormValidateSucess, reloadRepositoryWidgets);
+			document.removeEventListener(UIEvents.buildInFormValidateSucess, submitStepData);
 		};
 	}, []);
 

@@ -42,6 +42,7 @@ function MultiStepFormContexProvider({ children }: { children: React.ReactElemen
 			.then((storedMultiStepForm) => {
 				if (storedMultiStepForm) {
 					setMultiStepForm(storedMultiStepForm);
+					setCurrentStep(storedMultiStepForm.lastStepCompleted + 1);
 				}
 				setIsLoading(false);
 			})
@@ -60,6 +61,8 @@ function MultiStepFormContexProvider({ children }: { children: React.ReactElemen
 		nextStep: number;
 	}) {
 		stepData.uuid = uuid;
+		stepData.lastStepCompleted =
+			currentStep > multiStepForm.lastStepCompleted ? currentStep : multiStepForm.lastStepCompleted;
 		repository
 			.save(stepData as MultiStepForm)
 			.then(function () {

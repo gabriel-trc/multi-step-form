@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import { useMultiStepFormContext } from "./MultiStepFormContexProvider";
-import { ApplicantCompanyInformationStep, ContactPersonStep } from "./steps";
+import { ApplicantCompanyInformationStep, ContactPersonStep, LegalRepresentative } from "./steps";
 import { UIEvents } from "./UIEvents";
 
 const rightArrow =
@@ -9,7 +9,11 @@ const rightArrow =
 const leftArrow =
 	"https://ik.imagekit.io/lrjseyuxi3m/youtube/Form/back-arrow_ZBmeHiBP3.svg?updatedAt=1634410703363";
 
-const FORM_STEPS = [<ContactPersonStep />, <ApplicantCompanyInformationStep />];
+const FORM_STEPS = [
+	<ContactPersonStep />,
+	<ApplicantCompanyInformationStep />,
+	<LegalRepresentative />,
+];
 
 function MultiStepForm() {
 	const { currentStep, goToPreviousStep, formRef } = useMultiStepFormContext();
@@ -31,10 +35,12 @@ function MultiStepForm() {
 					</button>
 				)}
 
-				<button type="submit">
-					<img src={rightArrow} alt="Flecha paso siguiente" />
-					{currentStep === FORM_STEPS.length - 1 ? "FINALIZAR" : "SIGUIENTE"}
-				</button>
+				{currentStep < FORM_STEPS.length && (
+					<button type="submit">
+						<img src={rightArrow} alt="Flecha paso siguiente" />
+						{currentStep === FORM_STEPS.length - 1 ? "FINALIZAR" : "SIGUIENTE"}
+					</button>
+				)}
 			</section>
 		</form>
 	);

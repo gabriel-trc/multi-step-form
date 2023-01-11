@@ -34,12 +34,17 @@ export interface OrganizationSite {
 export interface MultiStepForm
 	extends ContactPerson,
 		ApplicantCompanyInformation,
-		LegalRepresentative {
+		LegalRepresentative,
+		OrganizationSite {
+	isCompleted: boolean;
+	lastStepCompleted: number;
 	uuid: string;
 }
 
 export function defaultMultiStepForm(uuid: string): MultiStepForm {
 	return {
+		isCompleted: false,
+		lastStepCompleted: 0,
 		uuid,
 		contactPersonName: "",
 		contactPersonLastName: "",
@@ -60,7 +65,7 @@ export function defaultMultiStepForm(uuid: string): MultiStepForm {
 		legalRepresentativeDocumentType: "",
 		legalRepresentativeDocumentNumber: "",
 		organizationSiteHeadquarter: "",
-		organizationSiteOthers: "",
+		organizationSiteOthers: false,
 		organizationSiteOthersDocuments: "",
 	} as MultiStepForm;
 }
