@@ -27,8 +27,8 @@ export interface LegalRepresentative {
 
 export interface OrganizationSite {
 	organizationSiteHeadquarter: string;
-	organizationSiteOthers: boolean;
-	organizationSiteOthersDocuments: string;
+	organizationSiteHasOthersHeadquarters: boolean;
+	organizationSiteOthersHeadquartersDocuments: string;
 }
 
 export interface MultiStepForm
@@ -65,8 +65,8 @@ export function defaultMultiStepForm(uuid: string): MultiStepForm {
 		legalRepresentativeDocumentType: "",
 		legalRepresentativeDocumentNumber: "",
 		organizationSiteHeadquarter: "",
-		organizationSiteOthers: false,
-		organizationSiteOthersDocuments: "",
+		organizationSiteHasOthersHeadquarters: false,
+		organizationSiteOthersHeadquartersDocuments: "",
 	} as MultiStepForm;
 }
 

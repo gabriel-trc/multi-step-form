@@ -3,7 +3,7 @@ import { MultiStepForm } from "../domain/MultiStepForm";
 import { MultiStepFormRepository } from "../domain/MultiStepFormRepository";
 
 class LocalStorageMultiStepFormRepository implements MultiStepFormRepository {
-	localStorageKey = "uruguayCountryBrandApplications";
+	localStorageKey = "multiStepFormBrandApplications";
 
 	async getAll(): Promise<MultiStepForm[]> {
 		const data = localStorage.getItem(this.localStorageKey);

@@ -2,6 +2,7 @@
 
 import { useMultiStepFormContext } from "./MultiStepFormContexProvider";
 import { ApplicantCompanyInformationStep, ContactPersonStep, LegalRepresentative } from "./steps";
+import { OrganizationSite } from "./steps/organization_site/OrganizationSite";
 import { UIEvents } from "./UIEvents";
 
 const rightArrow =
@@ -10,9 +11,10 @@ const leftArrow =
 	"https://ik.imagekit.io/lrjseyuxi3m/youtube/Form/back-arrow_ZBmeHiBP3.svg?updatedAt=1634410703363";
 
 const FORM_STEPS = [
-	<ContactPersonStep />,
-	<ApplicantCompanyInformationStep />,
-	<LegalRepresentative />,
+	// <ContactPersonStep />,
+	// <ApplicantCompanyInformationStep />,
+	// <LegalRepresentative />,
+	<OrganizationSite />,
 ];
 
 function MultiStepForm() {
@@ -25,7 +27,7 @@ function MultiStepForm() {
 
 	return (
 		<form ref={formRef} onSubmit={handleSubmit}>
-			{FORM_STEPS[currentStep]}
+			{FORM_STEPS[0]}
 
 			<section>
 				{currentStep > 0 && (
